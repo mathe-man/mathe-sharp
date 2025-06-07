@@ -1,0 +1,9 @@
+// This is a visual representation of the solution organization
+// Update-it when needed
+
+
+mathe-sharp			Description
+   |--------> CLI		Entry point, interface with user
+   |--------> Core		Main lib containing the lexer, parser, ...
+   #
+
