@@ -1,0 +1,9 @@
+#Compilation-Bianiries
+bin/
+obj/
+/packages/
+
+#Rider files
+riderModule.iml
+/_ReSharper.Caches/
+.idea
