@@ -3,6 +3,7 @@ namespace Core;
 public abstract class Expression
 {
     public abstract float Evaluate();
+    public abstract string ReadeableForm();
 }
 
 public class LiteralExpression : Expression
@@ -10,6 +11,7 @@ public class LiteralExpression : Expression
     public float Value;
     public LiteralExpression(float value) { Value = value; }
     public override float Evaluate() => Value;
+    public override string ReadeableForm() => $"{Value}";
 }
 
 public class BinaryExpression : Expression
@@ -38,4 +40,7 @@ public class BinaryExpression : Expression
             _ => throw new Exception("Unknown operator: " + Operator)
         };
     }
+
+    public override string ReadeableForm()
+        => $"({Left.Evaluate()} {Operator} {Right.Evaluate()} = {this.Evaluate()})";
 }
