@@ -38,7 +38,7 @@ public class Parser
             left = new BinaryExpression(left, op.TextValue, right);
         }
 
-        Console.WriteLine($"{left.ReadeableForm()}");
+        Console.WriteLine($"{left.ReadableForm()}");
         return left;
     }
 

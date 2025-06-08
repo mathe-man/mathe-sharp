@@ -1,9 +1,12 @@
 namespace Core;
 
-public abstract class Expression
+public interface IReadable
+{ public string ReadableForm(); }
+
+public abstract class Expression : IReadable
 {
     public abstract float Evaluate();
-    public abstract string ReadeableForm();
+    public abstract string ReadableForm();
 }
 
 public class LiteralExpression : Expression
@@ -11,7 +14,7 @@ public class LiteralExpression : Expression
     public float Value;
     public LiteralExpression(float value) { Value = value; }
     public override float Evaluate() => Value;
-    public override string ReadeableForm() => $"{Value}";
+    public override string ReadableForm() => $"{Value}";
 }
 
 public class BinaryExpression : Expression
@@ -41,6 +44,32 @@ public class BinaryExpression : Expression
         };
     }
 
-    public override string ReadeableForm()
+    public override string ReadableForm()
         => $"({Left.Evaluate()} {Operator} {Right.Evaluate()} = {this.Evaluate()})";
+}
+
+public class SequenceExpression : Expression
+{
+    public List<Expression> Expressions {get;}
+    
+    public SequenceExpression(List<Expression> expressions)
+    { Expressions = expressions; }
+
+    public override float Evaluate()
+    {
+        float result = 0;
+        foreach (Expression e in Expressions)
+            result = e.Evaluate();
+        
+        return result;
+    }
+
+    public override string ReadableForm()
+    {
+        string result = "";
+        foreach (Expression e in Expressions)
+            result += e.ReadableForm() + "\n";
+        
+        return result;
+    }
 }

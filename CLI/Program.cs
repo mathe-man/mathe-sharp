@@ -6,11 +6,15 @@ class Program
 {
     static void Main(string[] args)
     {
-        
+        string defaultProgram = "7 + 8 / 2";
+        Console.WriteLine($"Default Program: {defaultProgram}");
         Console.Write(">>");
-        Lexer lexer = new Lexer(Console.ReadLine());
+        string? input = Console.ReadLine();
         
-        foreach (Token token in lexer.Tokenize())
-            Console.Write(token.Type + " ");
+        Lexer lexer = new Lexer(string.IsNullOrWhiteSpace(input) ? defaultProgram : input
+        );
+        Parser parser = new Parser(lexer.Tokenize());
+        
+        Console.WriteLine(parser.Parse().ReadableForm());
     }
 }
