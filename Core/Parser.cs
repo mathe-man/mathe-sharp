@@ -16,8 +16,24 @@ public class Parser
     public Parser(List<Token> tokens) { _tokens = tokens; }
 
     public Expression Parse()
-    { return ParseExpression(0); }
+    { return ParseProgram(); }
 
+    private Expression ParseProgram()
+    {
+        List<Expression> expressions = new ();
+
+        while (_pos < _tokens.Count)
+        {
+            expressions.Add(ParseExpression(0));
+            
+            if (Peek().Type == TokenType.NewLine)
+                Advance();
+            if (Peek().Type == TokenType.EndOfFile)
+                break;
+        }
+        
+        return new SequenceExpression(expressions);
+    }
     private Expression ParseExpression(int minPrecedence)
     {
         Expression left = ParsePrimary();
@@ -38,7 +54,6 @@ public class Parser
             left = new BinaryExpression(left, op.TextValue, right);
         }
 
-        Console.WriteLine($"{left.ReadableForm()}");
         return left;
     }
 

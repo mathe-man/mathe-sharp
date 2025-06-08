@@ -4,6 +4,7 @@ public enum TokenType
 {
     Number,
     Operator,
+    NewLine,
     EndOfFile
 }
 
